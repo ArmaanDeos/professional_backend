@@ -50,6 +50,7 @@ const userSchema = new Schema(
 );
 
 //?_ custom hooks for encrypt password
+
 userSchema.pre("save", async function (next) {
   // check if password field is modify or not if it is then only we encrypt password
   if (!this.isModified("password")) return next();
@@ -58,7 +59,7 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-// ?_Methods for check user password and decrypt.
+// ?_Methods for check user password is correct and decrypt.
 userSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
